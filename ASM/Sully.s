@@ -13,7 +13,7 @@ section .data
 	link_cmd: db "gcc -Wextra -Wall -Werror -no-pie Sully_%d.o -o Sully_%d", 0
 	exec_cmd: db "./Sully_%d", 0
 	x: equ 5
-	code : db "bits 64%1$c%1$c", 0
+	code : db "bits 64%1$c%1$cextern fprintf%1$cextern fopen%1$cextern fclose%1$cextern snprintf%1$cextern system%1$cglobal main%1$c%1$csection .data%1$c", 0
 
     write_mode: db "w", 0
 
@@ -28,26 +28,26 @@ section .text
 main:
 	push rbp
 	
-	; check x
+check_x:
 	mov rax, x
 	cmp rax, 0
 	jle return
 
-	;snprintf name
+snprintf_name:
 	mov rdi, buff_name
 	mov rsi, 50
 	mov rdx, name
 	mov rcx, x - 1
 	call snprintf
 
-	;snprintf assemble
+snprintf_assemble:
 	mov rdi, buff_asm
 	mov rsi, 50
 	mov rdx, asm_cmd
 	mov rcx, x - 1
 	call snprintf
 
-	;snprintf link
+snprintf_link:
 	mov rdi, buff_link
 	mov rsi, 80
 	mov rdx, link_cmd
@@ -55,21 +55,23 @@ main:
 	mov r8, x - 1
 	call snprintf
 
-	; open
+open_fd:
     mov rdi, buff_name
     mov rsi, write_mode
     call fopen
-    cmp rax, 0 ; check error
+    cmp rax, 0
     je ret_error
 
-	;fprintf
-	mov rbx, rax ; if no error, store addr in rbx
+print_file:
+	mov rbx, rax
    	mov rdi, rbx
 	mov rsi, code
 	mov rdx, 10
+	mov rcx, 34
+	mov r8, code
 	call fprintf
 
-	;close
+close:
     mov rdi, rbx
     call fclose
 
