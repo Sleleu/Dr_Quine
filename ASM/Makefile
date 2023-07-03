@@ -1,5 +1,5 @@
-NAMES = Grace Colleen
-OBJS = Grace.o Colleen.o
+NAMES = Grace Colleen Sully
+OBJS = Grace.o Colleen.o Sully.o
 
 NASMFLAGS = -f elf64
 GCCFLAGS = -Wextra -Wall -Werror -no-pie
@@ -12,11 +12,15 @@ Grace: Grace.o
 Colleen: Colleen.o
 	gcc $(GCCFLAGS) Colleen.o -o Colleen
 
+Sully: Sully.o
+	gcc $(GCCFLAGS) Sully.o -o Sully
+
 %.o: %.s
 	nasm $(NASMFLAGS) $< -o $@
 
 clean:
 	rm -rf $(OBJS)
+	rm -rf Grace_kid.s
 
 fclean: clean
 	rm -rf $(NAMES)
