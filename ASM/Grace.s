@@ -34,11 +34,11 @@ main:
 
     mov rdi, rbx
     call fclose
-    pop rbp
 
 exit:
     mov rax, 60
     xor rdi, rdi
+    pop rbp
     syscall
 %endmacro
 
