@@ -12,7 +12,7 @@ The traditional method for creating a self-displaying program involves these two
 The operation of a quine is ultimately quite similar to the self-replication process of a cell.
 There is an active part, involving the program's instructions, and a data part, the string, which allows for reconstructing the active part of the code, much like DNA.
 
-Each of the programs has a distinct objective :
+In this project, each of the programs has a distinct objective :
 
 `Colleen` : A program that generates a copy of itself in a separate file.
 
